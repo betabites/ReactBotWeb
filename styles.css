@@ -1,0 +1,29 @@
+.reactBotWrapper {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 300px;
+    height: 300px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    /*pointer-events: none;*/
+    /*background-color: #000;*/
+    pointer-events: none;
+    z-index: 10000;
+}
+
+/* Only disable pointer-events when NOT hovering */
+.reactBotWrapper:not(:hover) {
+    pointer-events: none;
+}
+
+
+.reactBotWrapper:hover {
+    opacity: 0.5;
+}
+
+.reactBotVideo {
+    width: 100%;
+    max-height: 100%;
+}
