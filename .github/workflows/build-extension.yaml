@@ -42,6 +42,7 @@ jobs:
 
       - name: Create CRX and ZIP Package
         run: |
+          touch packages/key.pem
           echo "$PRIVATE_KEY" > packages/key.pem
           crx3 --zip packages/extension.zip --crx packages/extension.crx --key packages/key.pem dist/
         env:
