@@ -1,6 +1,6 @@
 .reactBotWrapper {
     position: fixed;
-    bottom: 0;
+    bottom: -1px;
     right: 0;
     width: 300px;
     height: 300px;
@@ -12,6 +12,31 @@
     pointer-events: none;
     z-index: 10000;
 }
+
+.reactBotWrapper.top {
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+.reactBotWrapper.left.bottom  {left: 0; bottom: 0;}
+.reactBotWrapper.right.bottom {right: 0; bottom: 0;}
+.reactBotWrapper.left.top {left: 0; top: 0;}
+.reactBotWrapper.right.top {right: 0; top: 0;}
+
+.reactBotIdleVideo {transform-origin: right bottom;}
+
+.reactBotWrapper.flipHorizontal {right: 0; transform: scaleX(-1);}
+.reactBotWrapper.flipVertical {
+    right: 0; transform: scaleY(-1);
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+.reactBotWrapper.flipVertical.top {
+    right: 0;
+    transform: scaleY(-1);
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+.reactBotWrapper.flipHorizontal.flipVertical {right: 0; transform: scale(-1);}
 
 /* Only disable pointer-events when NOT hovering */
 .reactBotWrapper:not(:hover) {
@@ -26,4 +51,8 @@
 .reactBotVideo {
     width: 100%;
     max-height: 100%;
+}
+
+.reactBotIdleVideo {
+    transform: scale(0.86);
 }
