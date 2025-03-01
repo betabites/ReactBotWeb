@@ -13,6 +13,9 @@ The verification process form the Chrome Web Store takes a significant amount of
 ## Microsoft Edge
 [Waiting for the extension to be verified]
 
+## Safari
+We're working on a Safari-compatible version of this, but we cannot make any guarantees about it. Mostly due to platform-based difficulties.
+
 ## Manual Install (Chrome/Edge/Opera)
 If you want to install the latest version of ReactBot Web without waiting for your relevant extension store to accept it, you can follow these steps:
 1. Go to the 'Releases' page; https://github.com/betabites/ReactBotWeb/releases
