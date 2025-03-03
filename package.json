@@ -1,11 +1,11 @@
 {
   "name": "reactbotweb",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "esbuild .\\content_src\\content.ts --bundle --outfile=content.js",
-    "build-dev": "esbuild .\\content_src\\entry.ts --bundle --outfile=content.js --watch"
+    "build": "esbuild ./content_src/entry.ts --bundle --outfile=content.js",
+    "build-dev": "esbuild .content_src/entry.ts --bundle --outfile=content.js --watch"
   },
   "type": "module",
   "author": "",

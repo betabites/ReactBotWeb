@@ -1,0 +1,69 @@
+name: Build and Package Extension
+
+on:
+  release:
+    types: [ created ]
+
+jobs:
+  package-extension:
+    name: Package and Upload Browser Extension
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true  # Ensure Git LFS files are pulled
+
+      - name: Install Git LFS
+        run: |
+          git lfs install
+          git lfs pull
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'  # Adjust if needed
+
+      - name: Install Dependencies (if needed)
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Install tools for packaging
+        run: npm install -g crx3 web-ext
+
+      #      - name: Create ZIP Package
+      #        working-directory: ./dist
+      #        run: |
+      #          mkdir ../packages
+      #          zip -r ../packages/extension.zip *
+
+      - name: Create CRX and ZIP Package
+        run: |
+          mkdir packages
+          echo "$PRIVATE_KEY" > packages/key.pem
+          npx crx3 --zip packages/extension.zip --crx packages/extension.crx --key packages/key.pem dist/
+        env:
+          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+
+      - name: Upload ZIP to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: packages/extension.zip
+          asset_name: extension.zip
+          tag: ${{ github.ref }}
+          overwrite: true
+
+      - name: Upload CRX to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: packages/extension.crx
+          asset_name: (CHROME) extension.crx
+          tag: ${{ github.ref }}
+          overwrite: true

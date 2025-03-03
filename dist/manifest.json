@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "ReactBot Web",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "ReactBot reacts to whatever you're watching on YouTube",
   "web_accessible_resources": [{
     "resources": ["GrabBag/*.webm"],
