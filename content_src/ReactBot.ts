@@ -88,6 +88,7 @@ function playYouTubeVideos(elements: YouTubeVideoElement[]) {
 export class ReactBot {
     wrapper = document.createElement("div")
     currentVideo = document.createElement("video")
+    idleVideo = document.createElement("video")
     currentSource = document.createElement("source")
 
     #videos = shuffleArray(videosOriginal)
@@ -100,7 +101,7 @@ export class ReactBot {
         this.loadNextVideo(false)
         configManager.waitForReady().then(() => {
             if (configManager.autoReaction) this.configureNextAutoReaction()
-            this.updateScale()
+            this.updateStyles()
         })
         configManager.events.addEventListener("change", () => {
             if (!configManager.autoReaction && this.#nextReactionTimeout) {
@@ -108,7 +109,7 @@ export class ReactBot {
                 this.#nextReactionTimeout = null
             }
             else if (configManager.autoReaction && !this.#nextReactionTimeout) this.configureNextAutoReaction()
-            this.updateScale()
+            this.updateStyles()
         })
 
         document.addEventListener("keydown", (event) => {
@@ -117,12 +118,46 @@ export class ReactBot {
                 this.loadNextVideo()
             }
         })
+
+        // Configure the idle animation
+        this.idleVideo.src = getBrowserAPI().runtime.getURL(`GrabBag/Idle.webm`)
+        this.idleVideo.loop = true
+        this.idleVideo.autoplay = true
+        this.idleVideo.muted = true
+        this.idleVideo.playsInline = true
+        this.idleVideo.classList.add("reactBotIdleVideo")
+        this.wrapper.appendChild(this.idleVideo)
+        this.currentVideo.style.display = "none";
     }
 
-    updateScale() {
+    updateStyles() {
         let size = (configManager.scale / 50) * 300
         this.wrapper.style.width = `${size}px`
         this.wrapper.style.height = `${size}px`
+
+        // Position ReactBot
+        if (configManager.corner[0] === "t") {
+            this.wrapper.classList.remove("bottom")
+            this.wrapper.classList.add("top")
+        }
+        if (configManager.corner[0] === "b") {
+            this.wrapper.classList.remove("top")
+            this.wrapper.classList.add("bottom")
+        }
+        if (configManager.corner[1] === "l") {
+            this.wrapper.classList.remove("right")
+            this.wrapper.classList.add("left")
+        }
+        if (configManager.corner[1] === "r") {
+            this.wrapper.classList.remove("left")
+            this.wrapper.classList.add("right")
+        }
+
+        // Transformations
+        if (configManager.horizontal) this.wrapper.classList.add("flipHorizontal")
+        else this.wrapper.classList.remove("flipHorizontal")
+        if (configManager.vertical) this.wrapper.classList.add("flipVertical")
+        else this.wrapper.classList.remove("flipVertical")
     }
 
     configureNextAutoReaction() {
@@ -135,12 +170,17 @@ export class ReactBot {
         console.log(`next reaction in ${ms / 1000} seconds`)
         if (this.#nextReactionTimeout) clearTimeout(this.#nextReactionTimeout)
         this.#nextReactionTimeout = setTimeout(() => this.loadNextVideo(), ms);
+
+        // Return to idle animation
+        this.currentVideo.style.display = "none";
+        this.idleVideo.style.display = "";
     }
 
     loadNextVideo(play = true) {
         if (this.isReacting) return
         this.isReacting = true
         console.log("config loadNextVideo", play)
+
         if (this.#nextReactionTimeout !== null) {
             clearTimeout(this.#nextReactionTimeout)
             this.#nextReactionTimeout = null
@@ -165,24 +205,27 @@ export class ReactBot {
             if (!play) {
                 // Only play the first frame so that the video is at least visible
                 // newVideo.currentTime += 10
+                this.currentVideo.style.display = "none"
                 this.wrapper.appendChild(this.currentVideo)
                 return
             }
 
             let videoElements = getYouTubeVideoElements()
-            if (videoElements.length === 0) {
-                // There are no valid video elements loaded, so do nothing
-                this.configureNextAutoReaction()
-            }
+            // if (videoElements.length === 0) {
+            //     // There are no valid video elements loaded, so do nothing
+            //     this.configureNextAutoReaction()
+            //     return
+            // }
 
             console.log("AUTOPAUSE", configManager.autoPause)
+            this.idleVideo.style.display = "none";
             if (configManager.autoPause) {
                 pauseYouTubeVideos(videoElements)
                 newVideo.onended = async () => {
                     playYouTubeVideos(videoElements)
                     this.configureNextAutoReaction()
                 };
-                void newVideo.play();
+                newVideo.play().catch(e => {console.error(e); this.configureNextAutoReaction()});
             }
             else {
                 let lower = lowerYouTubeVolume(videoElements)
@@ -191,11 +234,11 @@ export class ReactBot {
                     await resetYouTubeVolume(videoElements)
                     this.configureNextAutoReaction()
                 };
-                void newVideo.play();
+                void newVideo.play().catch(e => {console.error(e); this.configureNextAutoReaction()});;
             }
 
             this.wrapper.appendChild(this.currentVideo)
-            this.currentVideo.play()
+            this.currentVideo.play().catch(e => {console.error(e); this.configureNextAutoReaction()});
         }
 
         this.currentSource.remove()
