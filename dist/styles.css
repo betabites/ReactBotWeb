@@ -17,10 +17,10 @@
     justify-content: flex-start;
     align-items: flex-start;
 }
-.reactBotWrapper.left.bottom  {left: 0; bottom: 0;}
-.reactBotWrapper.right.bottom {right: 0; bottom: 0;}
-.reactBotWrapper.left.top {left: 0; top: 0;}
-.reactBotWrapper.right.top {right: 0; top: 0;}
+.reactBotWrapper.left.bottom  {left: 0; bottom: -1px;}
+.reactBotWrapper.right.bottom {right: 0; bottom: -1px;}
+.reactBotWrapper.left.top {left: 0; top: -1px;}
+.reactBotWrapper.right.top {right: 0; top: -1px;}
 
 .reactBotIdleVideo {transform-origin: right bottom;}
 
@@ -54,5 +54,8 @@
 }
 
 .reactBotIdleVideo {
-    transform: scale(0.86);
+    /*transform: scale(0.86);*/
+    width: 100%;
+    max-height: 100%;
+    position: absolute;
 }

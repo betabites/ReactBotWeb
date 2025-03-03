@@ -205,16 +205,17 @@ export class ReactBot {
             if (!play) {
                 // Only play the first frame so that the video is at least visible
                 // newVideo.currentTime += 10
+                this.currentVideo.style.display = "none"
                 this.wrapper.appendChild(this.currentVideo)
                 return
             }
 
             let videoElements = getYouTubeVideoElements()
-            if (videoElements.length === 0) {
-                // There are no valid video elements loaded, so do nothing
-                this.configureNextAutoReaction()
-                return
-            }
+            // if (videoElements.length === 0) {
+            //     // There are no valid video elements loaded, so do nothing
+            //     this.configureNextAutoReaction()
+            //     return
+            // }
 
             console.log("AUTOPAUSE", configManager.autoPause)
             this.idleVideo.style.display = "none";
@@ -224,7 +225,7 @@ export class ReactBot {
                     playYouTubeVideos(videoElements)
                     this.configureNextAutoReaction()
                 };
-                void newVideo.play();
+                newVideo.play().catch(e => {console.error(e); this.configureNextAutoReaction()});
             }
             else {
                 let lower = lowerYouTubeVolume(videoElements)
@@ -233,11 +234,11 @@ export class ReactBot {
                     await resetYouTubeVolume(videoElements)
                     this.configureNextAutoReaction()
                 };
-                void newVideo.play();
+                void newVideo.play().catch(e => {console.error(e); this.configureNextAutoReaction()});;
             }
 
             this.wrapper.appendChild(this.currentVideo)
-            this.currentVideo.play()
+            this.currentVideo.play().catch(e => {console.error(e); this.configureNextAutoReaction()});
         }
 
         this.currentSource.remove()
