@@ -1,9 +1,9 @@
 {
   "name": "reactbotweb",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "main": "index.js",
   "scripts": {
-    "build-static": "mkdir -p ./dist && cp -r src/static_code/* ./dist/ && cp -r src/static_assets/* ./dist/",
+    "build-static": "mkdir -p ./dist && cp -r src/static_code/* ./dist/ && cp -r assets/* ./dist/",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npm run build-static && esbuild src/content_src/entry.ts --bundle --outfile=dist/content.js",
     "build-dev": "npm run build-static && esbuild src/content_src/entry.ts --bundle --outfile=dist/content.js --watch"
@@ -16,6 +16,7 @@
     "@types/node": "^22.13.5",
     "esbuild": "^0.25.0",
     "typescript": "^5.7.3",
+    "web-ext": "^8.4.0",
     "webpack": "^5.98.0"
   }
 }
