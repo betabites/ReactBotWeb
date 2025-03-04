@@ -28,7 +28,7 @@ If you want to install the latest version of ReactBot Web without waiting for yo
 8. In the dialog window, navigate to and select the folder you extracted `extension.zip` to. You'll know the folder you've selected is correct if it has a sub-folder labeled `GrabBag`.
    - If you are asked to select a file instead of a folder, double-click the `manifest.json`
 10. All done! The ReactBot Web extension is now loaded!
-
+> **WARNING:** You will not receive any automatic updates if you install the extension manually.
 ## Manual Install (Firefox)
 Below is instructions for how to manually install this extension on Mozilla FireFox. We recommend installing through the [FireFox Add-Ons website](#Firefox) unless you want to tinker.
 1. Go to the 'Releases' page; https://github.com/betabites/ReactBotWeb/releases
@@ -40,3 +40,4 @@ Below is instructions for how to manually install this extension on Mozilla Fire
 7. Click on 'Load Temporary Add-On'
 8. In the dialog window, navigate to the location where `extension.zip` was extracted to. There should be a `manifest.json` file here. Once you've found it, double-click it.
 9. All done! The ReactBot Web extension is now loaded!
+> **WARNING:** You will not receive any automatic updates if you install the extension manually.
