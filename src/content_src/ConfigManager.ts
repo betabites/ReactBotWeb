@@ -1,4 +1,4 @@
-import {getBrowserAPI} from "./getBrowserAPI.js";
+import {getBrowserAPI} from "./getBrowserAPI";
 
 type Corner = "tl" | "tr" | "bl" | "br"
 class ConfigManagerClass {
