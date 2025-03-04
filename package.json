@@ -1,6 +1,6 @@
 {
   "name": "reactbotweb",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "main": "index.js",
   "scripts": {
     "build-static": "mkdir -p ./dist && cp -r src/static_code/* ./dist/ && cp -r assets/* ./dist/",
