@@ -1,12 +1,16 @@
 import {getBrowserAPI} from "./getBrowserAPI.js";
 
+type Corner = "tl" | "tr" | "bl" | "br"
 class ConfigManagerClass {
-    #data: {intervalMin: number, intervalMax: number, autoPause: boolean, autoReaction: boolean, scale: number} = {
+    #data: {intervalMin: number, intervalMax: number, autoPause: boolean, autoReaction: boolean, scale: number, corner: Corner, horizontal: boolean, vertical: boolean} = {
         intervalMin: 30,
         intervalMax: 300,
         autoPause: false,
         autoReaction: true,
-        scale: 50
+        scale: 50,
+        corner: "br",
+        horizontal: false,
+        vertical: false
     }
     #ready = false;
     events = new EventTarget();
@@ -16,12 +20,18 @@ class ConfigManagerClass {
     get autoPause() {return this.#data.autoPause}
     get autoReaction() {return this.#data.autoReaction}
     get scale() {return this.#data.scale}
+    get corner() {return this.#data.corner}
+    get horizontal() {return this.#data.horizontal}
+    get vertical() {return this.#data.vertical}
 
     set intervalMin(value: number) {this.#data.intervalMin = value; this.#saveConfig()}
     set intervalMax(value: number) {this.#data.intervalMax = value; this.#saveConfig()}
     set autoPause(value: boolean) {this.#data.autoPause = value; this.#saveConfig()}
     set autoReaction(value: boolean) {this.#data.autoReaction = value; this.#saveConfig()}
     set scale(value: number) {this.#data.scale = value; this.#saveConfig()}
+    set corner(value: Corner) {this.#data.corner = value; this.#saveConfig()}
+    set horizontal(value: boolean) {this.#data.horizontal = value; this.#saveConfig()}
+    set vertical(value: boolean) {this.#data.vertical = value; this.#saveConfig()}
 
     constructor() {
         // super();
@@ -36,12 +46,15 @@ class ConfigManagerClass {
     }
 
     async updateConfig() {
-        this.#data = await getBrowserAPI().storage.sync.get(["intervalMin", "intervalMax", "autoPause", "autoReaction", "scale"])
+        this.#data = await getBrowserAPI().storage.sync.get(["intervalMin", "intervalMax", "autoPause", "autoReaction", "scale", "corner", "vertical", "horizontal"])
         if (this.#data.intervalMin === undefined) this.#data.intervalMin = 30
         if (this.#data.intervalMax === undefined) this.#data.intervalMax = 300
-        if (this.#data.autoPause === undefined) this.#data.autoPause = false
+        if (this.#data.autoPause === undefined) this.#data.autoPause = true
         if (this.#data.autoReaction === undefined) this.#data.autoReaction = true
         if (this.#data.scale === undefined) this.#data.scale = 50
+        if (this.#data.corner === undefined) this.#data.corner = "br"
+        if (this.#data.horizontal === undefined) this.#data.horizontal = false
+        if (this.#data.vertical === undefined) this.#data.vertical = false
         console.log("Config loaded:", this.#data)
         this.#ready = true;
         this.events.dispatchEvent(new CustomEvent('ready'))
