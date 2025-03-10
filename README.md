@@ -7,11 +7,12 @@ ReactBot Web is available for FireFox from the offical Mozilla Add-ons website:
 https://addons.mozilla.org/en-US/developers/addon/unoffical-reactbot-web/edit
 
 ## Chrome & Opera
-The verification process form the Chrome Web Store takes a significant amount of time. This means that the version on the Chrome Web Store may be somewhat behind other versions.
-[Waiting for the first version to be verified]
+ReactBot Web is available for Chrome & Opera via the Chrome Web Store website:
+https://chromewebstore.google.com/detail/reactbot-web/apiabcflplalokekghbobkfodjeeicfh
 
 ## Microsoft Edge
-[Waiting for the extension to be verified]
+ReactBot Web is available for Microsoft Edge via the the Microsoft Edge Add-ons website:
+https://microsoftedge.microsoft.com/addons/detail/dmanhielokhjkklokddkncomiibeeifb
 
 ## Safari
 We're working on a Safari-compatible version of this, but we cannot make any guarantees about it. Mostly due to platform-based difficulties.
