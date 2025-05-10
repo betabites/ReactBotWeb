@@ -1,6 +1,6 @@
-import {videosOriginal} from "./videosOriginal.js";
-import {configManager} from "./ConfigManager.js";
-import {getBrowserAPI} from "./getBrowserAPI.js";
+import {videosOriginal} from "./videosOriginal";
+import {configManager} from "./ConfigManager";
+import {getBrowserAPI} from "./getBrowserAPI";
 
 async function adjustVolume(
     element: HTMLMediaElement,

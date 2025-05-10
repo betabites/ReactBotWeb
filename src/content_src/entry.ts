@@ -1,4 +1,4 @@
-import {ReactBot} from "./ReactBot.js";
+import {ReactBot} from "./ReactBot";
 
 function load() {
     let reactBot = new ReactBot()
